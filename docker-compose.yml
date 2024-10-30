@@ -1,0 +1,28 @@
+version: '3'
+services:
+  ignite-node1:
+    image: apacheignite/ignite:latest
+    environment:
+      - OPTION_LIBS=ignite-rest-http
+    ports:
+      - "10800:10800" # Thin client port
+      - "8080:8080"   # REST API port
+    networks:
+      - ignite-network
+    command: >
+      ./apache-ignite/bin/ignite.sh
+      -J-Xms1g -J-Xmx1g
+
+  ignite-node2:
+    image: apacheignite/ignite:latest
+    environment:
+      - OPTION_LIBS=ignite-rest-http
+    networks:
+      - ignite-network
+    command: >
+      ./apache-ignite/bin/ignite.sh
+      -J-Xms1g -J-Xmx1g
+
+networks:
+  ignite-network:
+    driver: bridge
